@@ -1,5 +1,5 @@
 import pytest
-from unittest.mock import AsyncMock, patch
+from unittest.mock import AsyncMock, patch, MagicMock
 from fastapi.testclient import TestClient
 
 
@@ -15,9 +15,11 @@ async def test_create_order_unit(mock_save, mock_get):
     """Unit test: Testira kreiranje porudžbine uz mokovanje eksternog HTTP poziva"""
     
     
-    mock_response = AsyncMock()
+    mock_response = MagicMock()
     mock_response.status_code = 200
     mock_response.json.return_value = {"id": "prod_123", "name": "Test Product", "price": 100.0, "quantity": 10}
+    
+    
     mock_get.return_value = mock_response
 
     payload = {"id": "prod_123", "quantity": 2}
